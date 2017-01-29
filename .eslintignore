@@ -1,0 +1,3 @@
+client/build/*.js
+client/config/*.js
+node_modules

@@ -1,0 +1,18 @@
+{
+  "db": {
+    "name": "timestamps",
+    "username": "root",
+    "password": "root"
+  },
+  "port": "5000",
+  "url": "http://localhost:5000",
+  "apis": {
+    "projects": "projects",
+    "users": "users",
+    "auth": "auth"
+  },
+  "secrets": {
+    "session": "sessionSecretMegazorkan666",
+    "jwt": "jwtSecretMegazorkan666"
+  }
+}
