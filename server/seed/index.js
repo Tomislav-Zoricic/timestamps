@@ -1,5 +1,6 @@
 'use strict'
 
+// Testing faker library.
 import faker from 'faker'
 import { User, Project, Customer } from './../sqldb'
 

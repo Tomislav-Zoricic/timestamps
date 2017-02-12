@@ -4,7 +4,6 @@ import { Project } from './../../sqldb'
 import { getResult, entityNotFound, removeEntity, handleError } from './../helpers'
 
 export function index (req, res) {
-  console.log('svi projekti', req.headers)
   return Project.findAll()
     .then(getResult(res))
     .catch(handleError(res))

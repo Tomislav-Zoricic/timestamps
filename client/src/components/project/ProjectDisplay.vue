@@ -2,7 +2,12 @@
   <div class="project-display">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">{{activeProject.name}}</h3>
+        <h3 class="panel-title">
+          <router-link
+            :to="{ name: 'project', params: { id: activeProject.id }}">
+              {{ activeProject.name }}
+          </router-link>
+        </h3>
       </div>
       <div class="panel-body">
         <p>Budget: {{activeProject.budget | dollar}}</p>

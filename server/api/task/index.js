@@ -1,11 +1,12 @@
-'use strict';
+'use strict'
 
-const express = require('express');
-const controller = require('./task.controller');
+const express = require('express')
+const controller = require('./task.controller')
 
-const router = express.Router();
+const router = express.Router()
 
-router.get('/', controller.index);
-router.get('/:id', controller.show);
+router.get('/', controller.index)
+router.get('/:id', controller.show)
+router.post('/', controller.indexById)
 
-module.exports = router;
+module.exports = router

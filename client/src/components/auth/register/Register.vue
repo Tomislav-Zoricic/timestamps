@@ -97,13 +97,14 @@
           return false
         }
 
+        /*
         let { errors: passwordErrors } = passwordChecker.test(password)
         if (passwordErrors.length) {
           this.$store.commit(AUTH_FAIL)
           this.$store.commit(SET_MESSAGE, transformMessages(passwordErrors))
           return false
         }
-
+        */
         if (password !== passwordRepeat) {
           this.$store.commit(AUTH_FAIL)
           this.$store.commit(SET_MESSAGE, [passwordsMismatch])

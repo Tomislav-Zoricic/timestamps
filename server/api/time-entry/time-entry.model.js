@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = function (sequelize, { DATE, DECIMAL, INTEGER }) {
-  const TimeEntry = sequelize.define('time-entry', {
+  const TimeEntry = sequelize.define('time_entry', {
     id: {
       type: INTEGER,
       allowNull: false,
