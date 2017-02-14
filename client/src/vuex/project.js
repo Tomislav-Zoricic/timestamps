@@ -9,12 +9,17 @@ import api from './../api/project.js'
 
 const state = {
   projects: [],
-  activeProject: {}
+  project: {
+    data: {},
+    users: [],
+    tasks: [],
+    customer: {}
+  }
 }
 
 const getters = {
   allProjects: state => state.projects,
-  activeProject: state => state.activeProject
+  project: state => state.project
 }
 
 const actions = {
@@ -28,7 +33,7 @@ const actions = {
       })
   },
 
-  getProject (context, id) {
+  getProject (context, { id }) {
     api.getProject(id)
       .then(project => {
         context.commit(GET_PROJECT, { project })
@@ -45,7 +50,11 @@ const mutations = {
   },
 
   [GET_PROJECT] (state, { project }) {
-    state.activeProject = project.data
+    state.project = project.data
+
+    // NOTE find better way to do this.
+    // NOTE omit customer_id after this.
+    state.project.data.customerId = project.data.data['customer_id']
   }
 }
 

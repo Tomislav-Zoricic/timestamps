@@ -4,14 +4,14 @@
       <div class="panel-heading">
         <h3 class="panel-title">
           <router-link
-            :to="{ name: 'project', params: { id: activeProject.id }}">
-              {{ activeProject.name }}
+            :to="{ name: 'project', params: { id: project.data.id }}">
+              {{ project.data.name }}
           </router-link>
         </h3>
       </div>
       <div class="panel-body">
-        <p>Budget: {{activeProject.budget | dollar}}</p>
-        <p v-if="activeProject.customerId">Has customer</p>
+        <p>Budget: {{project.data.budget | dollar}}</p>
+        <p v-if="project.data.customerId">Has customer</p>
         <p v-else>Internal project</p>
       </div>
     </div>  </div>
@@ -21,10 +21,15 @@
 export default {
   name: 'ProjectDisplay',
   props: {
-    activeProject: {
+    project: {
       type: Object,
       default () {
-        return {}
+        return {
+          data: {},
+          tasks: [],
+          users: [],
+          customer: {}
+        }
       }
     }
   },
@@ -45,8 +50,8 @@ export default {
 
   methods: {
     fetchData () {
-      let projectId = this.$route.params.id
-      this.$store.dispatch('getProject', projectId)
+      let id = this.$route.params.id
+      this.$store.dispatch('getProject', { id })
     }
   }
 }

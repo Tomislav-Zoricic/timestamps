@@ -1,10 +1,13 @@
 'use strict'
 
-import omit from 'lodash/omit'
 import snakeCase from 'lodash/snakeCase'
 import faker from 'faker'
 import { User } from './../../sqldb'
-import { getResult, entityNotFound, removeEntity, handleError } from './../helpers'
+import { getResult,
+         entityNotFound,
+         handleError,
+         removeEntity,
+         removeAuthData} from './../helpers'
 import { signToken } from './../../auth/auth.service'
 
 export function index (req, res) {
@@ -38,7 +41,7 @@ export function create (req, res) {
       res.json(
         {
           'token': signToken(user.id /*, user.role */),
-          'user': omit(user.dataValues, ['password', 'salt'])
+          'user': removeAuthData(user.dataValues)
         })
     })
     .catch(handleError(res))

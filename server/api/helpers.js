@@ -1,5 +1,7 @@
 'use strict'
 
+import omit from 'lodash/omit'
+
 export function getResult (res, statusCode) {
   statusCode = statusCode || 200
   return function (entity) {
@@ -34,4 +36,8 @@ export function handleError (res, statusCode) {
   return function (err) {
     res.status(statusCode).send(err)
   }
+}
+
+export function removeAuthData (user) {
+  return omit(user.dataValues, ['password', 'salt'])
 }

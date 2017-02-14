@@ -8,7 +8,7 @@
       </div>
       <div class="col-sm-4 col-sm-offset-2">
         <!-- display project info -->
-        <router-view :activeProject="activeProject"></router-view>
+        <router-view :project="project"></router-view>
       </div>
     </div>
   </div>
@@ -29,8 +29,8 @@ export default {
     projects () {
       return this.$store.getters.allProjects
     },
-    activeProject () {
-      return this.$store.getters.activeProject
+    project () {
+      return this.$store.getters.project
     }
   },
 
