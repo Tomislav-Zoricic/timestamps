@@ -7,7 +7,7 @@ const BYTE_SIZE = 16
 
 const exists = function (value) { return value && value.length }
 
-module.exports = function (sequelize, { STRING, INTEGER }) {
+export default function (sequelize, { STRING, INTEGER }) {
   const User = sequelize.define('user', {
     id: {
       type: INTEGER,

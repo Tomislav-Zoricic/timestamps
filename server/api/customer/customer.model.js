@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function (sequelize, { INTEGER, STRING }) {
+export default function (sequelize, { INTEGER, STRING }) {
   const Customer = sequelize.define('customer', {
     id: {
       type: INTEGER,

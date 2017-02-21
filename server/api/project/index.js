@@ -1,7 +1,7 @@
 'use strict'
 
-const express = require('express')
-const controller = require('./project.controller')
+import express from 'express'
+import controller from './project.controller'
 
 const router = express.Router()
 
@@ -10,4 +10,4 @@ router.get('/:id', controller.show)
 router.post('/', controller.create)
 router.delete('/:id', controller.destroy)
 
-module.exports = router
+export default router

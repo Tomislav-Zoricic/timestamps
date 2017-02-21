@@ -5,7 +5,7 @@
 const MIN_CHARS = 5
 const MAX_CHARS = 20
 
-module.exports = function (sequelize, { INTEGER, STRING, DECIMAL }) {
+export default function (sequelize, { INTEGER, STRING, DECIMAL }) {
   const Task = sequelize.define('task',
     {
       id: {

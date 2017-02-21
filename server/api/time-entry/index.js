@@ -1,7 +1,7 @@
 'use strict'
 
-const express = require('express')
-const controller = require('./time-entry.controller')
+import express from 'express'
+import controller from './time-entry.controller'
 
 const router = express.Router()
 
@@ -10,4 +10,4 @@ router.get('/:id', controller.show)
 router.post('/', controller.create)
 router.delete('/:id', controller.destroy)
 
-module.exports = router
+export default router

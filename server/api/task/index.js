@@ -1,11 +1,11 @@
 'use strict'
 
-const express = require('express')
-const controller = require('./task.controller')
+import express from 'express'
+import controller from './task.controller'
 
 const router = express.Router()
 
 router.get('/', controller.index)
 router.get('/:id', controller.show)
 
-module.exports = router
+export default router

@@ -7,13 +7,13 @@ import { getResult,
          removeEntity,
          removeAuthData } from './../helpers'
 
-export function index (req, res) {
+function index (req, res) {
   return Project.findAll()
     .then(getResult(res))
     .catch(handleError(res))
 }
 
-export function show (req, res) {
+function show (req, res) {
   let id = req.params.id
   let project = {}
   let customer = {}
@@ -47,13 +47,13 @@ export function show (req, res) {
   .catch(handleError(res))
 }
 
-export function create (req, res) {
+function create (req, res) {
   return Project.create(req.body)
     .then(getResult(res, 201))
     .catch(handleError(res))
 }
 
-export function destroy (req, res) {
+function destroy (req, res) {
   return Project.find({
     where: { id: req.params.id }
   })
@@ -79,4 +79,11 @@ function sanitizeUsers (users) {
   return sanitizedUsers.map(user => {
     return removeAuthData(user)
   })
+}
+
+export default {
+  index,
+  show,
+  create,
+  destroy
 }

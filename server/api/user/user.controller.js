@@ -10,13 +10,13 @@ import { getResult,
          removeAuthData} from './../helpers'
 import { signToken } from './../../auth/auth.service'
 
-export function index (req, res) {
+function index (req, res) {
   return User.findAll()
     .then(getResult(res))
     .catch(handleError(res))
 }
 
-export function show (req, res) {
+function show (req, res) {
   let condition = {}
   if (req.params.email) condition = { email: req.params.email }
   else if (req.params.id) condition = { id: req.params.id }
@@ -26,7 +26,7 @@ export function show (req, res) {
   .catch(handleError(res))
 }
 
-export function create (req, res) {
+function create (req, res) {
   // TODO decide between registering with first name and last name
   // or after registering with email/password going through the
   // menu for changing the names/image/everything needed.
@@ -47,7 +47,7 @@ export function create (req, res) {
     .catch(handleError(res))
 }
 
-export function destroy (req, res) {
+function destroy (req, res) {
   return User.find({
     where: { id: req.params.id }
   })
@@ -56,7 +56,7 @@ export function destroy (req, res) {
     .catch(handleError(res))
 }
 
-export function changePassword (req, res) {
+function changePassword (req, res) {
   let oldPass = String(req.body.oldPassword)
   let newPass = String(req.body.newPassword)
 
@@ -75,7 +75,7 @@ export function changePassword (req, res) {
     })
 }
 
-export function upsert (req, res) {
+function upsert (req, res) {
   let updateData = {}
   updateData[snakeCase(req.body.param)] = req.body.value
 
@@ -87,4 +87,13 @@ export function upsert (req, res) {
         .then(user => { res.json(user).end() })
         .catch(handleError(res))
     })
+}
+
+export default {
+  index,
+  show,
+  create,
+  destroy,
+  changePassword,
+  upsert
 }
