@@ -3,23 +3,29 @@
 import {
   GET_PROJECTS,
   GET_PROJECT
-} from './mutation-types'
+} from './../mutation-types'
 
-import api from './../api/project.js'
+import { extractData } from './dataExtractor'
+
+import api from './../../api/project.js'
+
+const emptyProject = {
+  data: {},
+  users: [],
+  tasks: [],
+  customer: {}
+  // NOTE try this with map, maybe better than pure object.
+}
 
 const state = {
   projects: [],
-  project: {
-    data: {},
-    users: [],
-    tasks: [],
-    customer: {}
-  }
+  project: emptyProject
 }
 
 const getters = {
   allProjects: state => state.projects,
-  project: state => state.project
+  project: state => state.project,
+  activeProject: state => state.project.data.id
 }
 
 const actions = {
@@ -50,11 +56,7 @@ const mutations = {
   },
 
   [GET_PROJECT] (state, { project }) {
-    state.project = project.data
-
-    // NOTE find better way to do this.
-    // NOTE omit customer_id after this.
-    state.project.data.customerId = project.data.data['customer_id']
+    extractData(state.project, project.data)
   }
 }
 

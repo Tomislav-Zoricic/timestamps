@@ -18,6 +18,7 @@
 <script>
 import navbar from './../navbar/Navbar.vue'
 import projectList from './ProjectList.vue'
+import { fetchAllProjects } from './../../utils/fetchService'
 
 export default {
   components: {
@@ -29,13 +30,14 @@ export default {
     projects () {
       return this.$store.getters.allProjects
     },
+
     project () {
       return this.$store.getters.project
     }
   },
 
   created () {
-    this.$store.dispatch('getProjects')
+    fetchAllProjects(this)
   }
 }
 </script>
