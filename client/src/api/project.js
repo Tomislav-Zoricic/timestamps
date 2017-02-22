@@ -18,5 +18,12 @@ export default {
       method: 'get',
       url: `${url}/api/${apis.projects}/${id}`
     })
+  },
+
+  getTimeEntries (id) {
+    return axios.request({
+      method: 'get',
+      url: `${url}/api/${apis.projects}/${id}/time-entries`
+    })
   }
 }

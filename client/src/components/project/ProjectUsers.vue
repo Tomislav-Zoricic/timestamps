@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="">
-    <li class="list-group-item" v-for="user in project.users">
+    <li class="list-group-item" v-for="user in users">
       <h4 class="list-group-item-heading">
           <!-- NOTE some kind of filter for this stuff... -->
           {{user.firstName}} {{user.lastName}}
@@ -21,12 +21,16 @@ export default {
       type: Object,
       default () {
         return {
-          data: {},
-          tasks: [],
-          users: [],
-          customer: {}
+          users: []
         }
       }
+    }
+  },
+
+  computed: {
+    users () {
+      // NOTE Find a nicer way to do this.
+      return Array.from(this.project.users.values())
     }
   },
 

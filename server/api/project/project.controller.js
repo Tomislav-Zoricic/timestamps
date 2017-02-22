@@ -1,6 +1,6 @@
 'use strict'
 
-import { Project, Task, Customer } from './../../sqldb'
+import { Project, Task, Customer, TimeEntry } from './../../sqldb'
 import { getResult,
          entityNotFound,
          handleError,
@@ -13,6 +13,8 @@ function index (req, res) {
     .catch(handleError(res))
 }
 
+// NOTE maybe also add extra routes for getting customer, tasks and users separately?
+// NOTE find in sequelize way to get only users_tasks relationship values.
 function show (req, res) {
   let id = req.params.id
   let project = {}
@@ -45,6 +47,14 @@ function show (req, res) {
   .then(entityNotFound(res))
   .then(getResult(res))
   .catch(handleError(res))
+}
+
+function showTimeEntries (req, res) {
+  let id = req.params.id
+  return TimeEntry.findAll({ where: { 'project_id': id } })
+    .then(entityNotFound(res))
+    .then(getResult(res))
+    .catch(handleError(res))
 }
 
 function create (req, res) {
@@ -84,6 +94,7 @@ function sanitizeUsers (users) {
 export default {
   index,
   show,
+  showTimeEntries,
   create,
   destroy
 }

@@ -1,5 +1,89 @@
 'use strict'
-import { User, Project, Customer, Task } from './../sqldb'
+
+import db from './../sqldb'
+
+let { user: User,
+      project: Project,
+      customer: Customer,
+      task: Task,
+      'time_entry': TimeEntry } = db.sequelize.models
+
+function getTimeEntries () {
+  return [
+    {
+      'date': new Date(Date.UTC(2015, 0, 1)),
+      'amount': 4.5,
+      'invoice_id': null,
+      'task_id': 3,
+      'user_id': 3,
+      'project_id': 1
+    },
+    {
+      'date': new Date(Date.UTC(2015, 2, 11)),
+      'amount': 9,
+      'invoice_id': null,
+      'task_id': 2,
+      'user_id': 1,
+      'project_id': 1
+    },
+    {
+      'date': new Date(Date.UTC(2016, 3, 12)),
+      'amount': 4,
+      'invoice_id': null,
+      'task_id': 1,
+      'user_id': 4,
+      'project_id': 1
+    },
+    {
+      'date': new Date(Date.UTC(2016, 4, 7)),
+      'amount': 8,
+      'invoice_id': null,
+      'task_id': 3,
+      'user_id': 3,
+      'project_id': 1
+    },
+    {
+      'date': new Date(Date.UTC(2015, 0, 1)),
+      'amount': 8,
+      'invoice_id': null,
+      'task_id': 1,
+      'user_id': 1,
+      'project_id': 1
+    },
+    {
+      'date': new Date(Date.UTC(2013, 0, 10)),
+      'amount': 3,
+      'invoice_id': null,
+      'task_id': 4,
+      'user_id': 5,
+      'project_id': 2
+    },
+    {
+      'date': new Date(Date.UTC(2015, 11, 22)),
+      'amount': 3.25,
+      'invoice_id': null,
+      'task_id': 5,
+      'user_id': 5,
+      'project_id': 2
+    },
+    {
+      'date': new Date(Date.UTC(2016, 8, 15)),
+      'amount': 10,
+      'invoice_id': null,
+      'task_id': 4,
+      'user_id': 4,
+      'project_id': 2
+    },
+    {
+      'date': new Date(Date.UTC(2016, 4, 20)),
+      'amount': 12,
+      'invoice_id': null,
+      'task_id': 4,
+      'user_id': 4,
+      'project_id': 2
+    }
+  ]
+}
 
 // password: defaultPass!1
 function getUsers () {
@@ -163,12 +247,13 @@ function getUsersTasks () {
   return bulk
 }
 
-export default function (bulk = false) {
+export default function (bulk = true) {
   if (bulk) {
     User.bulkCreate(getUsers(), { individualHooks: true })
-    .then(Customer.bulkCreate(getCustomers()))
-    .then(Project.bulkCreate(getProjects()))
-    .then(Task.bulkCreate(getTasks()))
+    .then(() => Customer.bulkCreate(getCustomers()))
+    .then(() => Project.bulkCreate(getProjects()))
+    .then(() => Task.bulkCreate(getTasks()))
     .then(() => { return Promise.all(getUsersTasks()) })
+    .then(() => TimeEntry.bulkCreate(getTimeEntries()))
   } else return Promise.resolve(true)
 }

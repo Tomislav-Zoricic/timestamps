@@ -3,13 +3,13 @@
 import camelCase from 'camelcase'
 
 let usersTasks = []
-let newUsers = {}
-let newTasks = {}
+let newUsers = new Map()
+let newTasks = new Map()
 
 function clearPreviousData () {
   usersTasks = []
-  newUsers = {}
-  newTasks = {}
+  newUsers = new Map()
+  newTasks = new Map()
 }
 
 function camelCaseObject (obj) {
@@ -29,9 +29,10 @@ function getUsers (users) {
 
     let { id } = user
     // There can be multiple copies of user.
-    if (!newUsers.hasOwnProperty(id)) {
-      newUsers[id] = camelCaseObject(user)
-      newUsers[id].taskIds = []
+    if (!newUsers.has(id)) {
+      let newUser = camelCaseObject(user)
+      newUser.taskIds = []
+      newUsers.set(id, camelCaseObject(newUser))
     }
   })
 }
@@ -40,8 +41,9 @@ function getTasks (tasks) {
   // NOTE should you remove project_id?
   tasks.forEach(task => {
     let { id } = task
-    newTasks[id] = camelCaseObject(task)
-    newTasks[id].userIds = []
+    let newTask = camelCaseObject(task)
+    newTask.userIds = []
+    newTasks.set(id, camelCaseObject(newTask))
   })
 }
 
@@ -49,8 +51,8 @@ function getTasks (tasks) {
 function connectUsersTasks () {
   usersTasks.forEach(ut => {
     let { user_id: userId, task_id: taskId } = ut
-    newUsers[userId].taskIds.push(taskId)
-    newTasks[taskId].userIds.push(userId)
+    newUsers.get(userId).taskIds.push(taskId)
+    newTasks.get(taskId).userIds.push(userId)
   })
 }
 
@@ -64,7 +66,7 @@ export const extractData = (project, payload) => {
 
   getUsers(users)
   getTasks(tasks)
-  connectUsersTasks(project)
+  connectUsersTasks()
   project.tasks = newTasks
   project.users = newUsers
 }

@@ -24,9 +24,6 @@ export default {
       type: Object,
       default () {
         return {
-          data: {},
-          tasks: [],
-          users: [],
           customer: {}
         }
       }

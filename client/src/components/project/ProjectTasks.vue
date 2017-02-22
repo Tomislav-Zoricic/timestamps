@@ -1,13 +1,10 @@
 <template lang="html">
   <div class="">
-    <li class="list-group-item" v-for="task in project.tasks">
+    <li class="list-group-item" v-for="task in tasks">
       <h4 class="list-group-item-heading">{{task.name}}</h4>
         <p class="list-group-item-text">{{task.description}}</p>
         <p class="list-group-item-text">Rate: {{task.rate}}</p>
         <!-- NOTE Add user displays on click ? -->
-        <p class="list-group-item-text">
-          {{task.userIds.length}} users are working on it.
-        </p>
     </li>
   </div>
 </template>
@@ -20,12 +17,16 @@ export default {
       type: Object,
       default () {
         return {
-          data: {},
-          tasks: [],
-          users: [],
-          customer: {}
+          tasks: new Map()
         }
       }
+    }
+  },
+
+  computed: {
+    tasks () {
+      // NOTE Find a nicer way to do this.
+      return Array.from(this.project.tasks.values())
     }
   },
 

@@ -2,7 +2,7 @@
 
 import snakeCase from 'lodash/snakeCase'
 import faker from 'faker'
-import { User } from './../../sqldb'
+import { User, TimeEntry } from './../../sqldb'
 import { getResult,
          entityNotFound,
          handleError,
@@ -16,12 +16,22 @@ function index (req, res) {
     .catch(handleError(res))
 }
 
+// NOTE should this be handled this way, or by multiple routes such as
+// router.get('/:email/email', controller.showEmail)
+// router.get('/:id', controller.show)
+
 function show (req, res) {
   let condition = {}
   if (req.params.email) condition = { email: req.params.email }
   else if (req.params.id) condition = { id: req.params.id }
 
   return User.find({ where: condition })
+  .then(getResult(res))
+  .catch(handleError(res))
+}
+
+function showTimeEntries (req, res) {
+  return TimeEntry.find({ where: { 'user_id': req.params.id } })
   .then(getResult(res))
   .catch(handleError(res))
 }
@@ -92,6 +102,7 @@ function upsert (req, res) {
 export default {
   index,
   show,
+  showTimeEntries,
   create,
   destroy,
   changePassword,

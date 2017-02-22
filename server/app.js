@@ -14,12 +14,14 @@ initExpress(app)
 initRoutes(app)
 
 function startServer (app) {
-  app.listen(port, function () { console.log(`running on port: ${port}`) })
+  app.listen(port, () => console.log(`running on port: ${port}`))
 }
 
-sqldb.sequelize.sync()
-  .then(startServer(app))
-  .then(seed())
+const shouldSeed = true
+
+sqldb.sequelize.sync({ force: shouldSeed })
+  .then(() => startServer(app))
+  .then(() => seed(shouldSeed))
   .catch(function (err) {
     console.log(`Server failed to start due to error: ${err}`)
   })

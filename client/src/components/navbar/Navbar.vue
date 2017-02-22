@@ -46,7 +46,6 @@ export default {
 
   methods: {
     logout () {
-      // NOTE add logout message set
       this.$store.dispatch('logout')
     }
   }
